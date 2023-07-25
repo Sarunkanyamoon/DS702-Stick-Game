@@ -14,7 +14,7 @@ def play_game():
 # Create player_turn function to define condition of sticks that they can take.
 def player_turn():
     global sticks, name, computer_choice
-    player_choice = int(input(f"{name}, how many sticks will you take (1 or 2): "))
+    player_choice = int(input("how many sticks you will take (1 or 2): "))
     # Define condition of player picking sticks.
     if player_choice in [1, 2] and player_choice <= sticks: 
         sticks -= player_choice
@@ -23,8 +23,8 @@ def player_turn():
         print("Invalid input. Please choose 1 or 2.")
         return player_turn()
     if sticks <= 0:
-        print(name, "takes the last stick.")
-        print("I, smart computer, win !!!!")
+        print("You takes the last stick.")
+        print("I WON (Python WON)")
 # Create computer_turn function.   
 # Computer's turn calculate the number of sticks to leave the player with to guarantee a win.
 def computer_turn():
@@ -33,8 +33,7 @@ def computer_turn():
     computer_choice = 2 if sticks % 3 == 0 else 1
 
     sticks -= computer_choice
-    print("I, smart computer, take:", computer_choice)
-    print("There are", sticks, "sticks in the pile.")
+    print("I take", computer_choice,"stick, there are", sticks, "sticks in the pile")
 
     if sticks <= 0:
         print("I, smart computer, take the last stick.")

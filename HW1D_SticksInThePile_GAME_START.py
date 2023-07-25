@@ -1,46 +1,48 @@
-# HW1D_SticksInThePile_GAME_START
-# Created on 18 July 2023 16:59
+# HW1E_SticksInThePile+AI
+# Created on 25 July 2023 18:39
 # Created by Sarun Kanyamoon studentID:660631099
+# Create and split the loop in to more def function from previous Homework.
 
-import random
-# Add fuction random before define play game condition.
-
+# Create of play_game function to take input of player name.
 def play_game():
-    sticks = int(input("How many sticks (N) in the pile: "))
-    print("There are", sticks, "sticks in the pile.")
+    #Annouce variable in to global.
+    global sticks, name, computer_choice
+    sticks = 20
     name = input("What is your name: ")
+    print("There are", sticks, "sticks in the pile.")
 
-    # Create condition to take out stick in the range that our define.
-    while sticks > 0:
-    # Create loop condition of code until sticks in the pile <= 0.
-        for _ in range(sticks):
-            while True:
-                player_choice = int(input(name + ", how many sticks will you take (1 or 2): "))
-                if player_choice in [1, 2]:
-                # This if condition determine player to pick stick in range 1-2.
-                    break
-                else:
-                    print("Invalid input. Please choose 1 or 2.")
-            # The sticks that player pick will use to minus in the pile from this function.
-            sticks -= player_choice
-            print("There are", sticks, "sticks in the pile.")
-            # If the stick <= 0 on this stage Bot will win the game.
-            if sticks <= 0:
-                print(name, "takes the last stick.")
-                print("I, smart computer, win !!!!")
-                return False
-            # Use random.randint to make Bot random select sticks from in pile in range 1-2.
-            smart_computer = random.randint(1, min(2, sticks))
-            print("I, smart computer, take:", smart_computer)
-            sticks -= smart_computer
-            print("There are", sticks, "sticks in the pile.")
-            
-            # If the stick <= 0 on this stage Player will win the game.
-            if sticks <= 0:
-                print("I, smart computer, take the last stick.")
-                print(name, "win (I, smart computer, am sad T_T)")
-                return False
+# Create player_turn function to define condition of sticks that they can take.
+def player_turn():
+    global sticks, name, computer_choice
+    player_choice = int(input(f"{name}, how many sticks will you take (1 or 2): "))
+    # Define condition of player picking sticks.
+    if player_choice in [1, 2] and player_choice <= sticks: 
+        sticks -= player_choice
+        print("There are", sticks, "sticks in the pile.")    
+    else:
+        print("Invalid input. Please choose 1 or 2.")
+        return player_turn()
+    if sticks <= 0:
+        print(name, "takes the last stick.")
+        print("I, smart computer, win !!!!")
+# Create computer_turn function.   
+# Computer's turn calculate the number of sticks to leave the player with to guarantee a win.
+def computer_turn():
+    global sticks, name, computer_choice
+    # If the remaining sticks are a multiple of 3, choose 2 sticks. Otherwise, choose 1 stick.
+    computer_choice = 2 if sticks % 3 == 0 else 1
 
-    return True
+    sticks -= computer_choice
+    print("I, smart computer, take:", computer_choice)
+    print("There are", sticks, "sticks in the pile.")
 
+    if sticks <= 0:
+        print("I, smart computer, take the last stick.")
+        print(name, "wins (I, smart computer, am sad T_T)")
+   
+
+# Call the function that I create on above and loop the function with " While" condition.
 play_game()
+while sticks > 0:
+    computer_turn()
+    player_turn()

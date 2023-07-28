@@ -16,13 +16,13 @@ def play_game():
 # Create player_turn function to define condition of sticks that they can take.
 def player_turn():
     global sticks, name, max_choice
-    player_choice = int(input("how many sticks you will take (1 or {max_choice}): "))
+    player_choice = int(input(f"how many sticks you will take (1 or {max_choice}): "))
     # Define condition of player picking sticks.
-    if player_choice in [1, 2] and player_choice <= sticks: 
+    if player_choice in range (1, max_choice + 1) and player_choice <= sticks: 
         sticks -= player_choice
         print("There are", sticks, "sticks in the pile.")    
     else:
-        print("Invalid input. Please choose 1 or 2.")
+        print("Invalid input. Please choose a valid number of sticks")
         return player_turn()
     if sticks <= 0:
         print("You takes the last stick.")
@@ -30,9 +30,20 @@ def player_turn():
 # Create computer_turn function.   
 # Computer's turn calculate the number of sticks to leave the player with to guarantee a win.
 def computer_turn():
-    global sticks, name, computer_choice
-    # If the remaining sticks are a multiple of 3, choose 2 sticks. Otherwise, choose 1 stick.
-    computer_choice = 2 if sticks % 3 == 0 else 1
+    global sticks, name, max_choice
+    
+    if sticks <= max_choice:
+        computer_choice = random.randint(1, sticks)
+    
+    else:        
+        remain_stick = sticks % (max_choice + 1)
+       
+        if remain_stick == 0:
+            computer_choice = random.randint(2, max_choice)
+       
+        else:
+            computer_choice = max_choice - remain_stick +1
+            
 
     sticks -= computer_choice
     print("I take", computer_choice,"stick, there are", sticks, "sticks in the pile")
@@ -46,4 +57,5 @@ def computer_turn():
 play_game()
 while sticks > 0:
     computer_turn()
-    player_turn()
+    if sticks > 0:
+        player_turn()

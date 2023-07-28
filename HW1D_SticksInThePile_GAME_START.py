@@ -3,18 +3,20 @@
 # Created by Sarun Kanyamoon studentID:660631099
 # Create and split the loop in to more def function from previous Homework.
 
+import random
 # Create of play_game function to take input of player name.
 def play_game():
     #Annouce variable in to global.
-    global sticks, name, computer_choice
-    sticks = 20
+    global sticks, name, max_choice
+    sticks = int(input("How many sticks (N) in the pile: "))
+    max_choice = min(2, sticks)
     name = input("What is your name: ")
     print("There are", sticks, "sticks in the pile.")
 
 # Create player_turn function to define condition of sticks that they can take.
 def player_turn():
-    global sticks, name, computer_choice
-    player_choice = int(input("how many sticks you will take (1 or 2): "))
+    global sticks, name, max_choice
+    player_choice = int(input("how many sticks you will take (1 or {max_choice}): "))
     # Define condition of player picking sticks.
     if player_choice in [1, 2] and player_choice <= sticks: 
         sticks -= player_choice

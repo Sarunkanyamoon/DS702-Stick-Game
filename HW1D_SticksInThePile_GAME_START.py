@@ -31,6 +31,8 @@ def player_turn():
 # Computer's turn calculate the number of sticks to leave the player with to guarantee a win.
 def computer_turn():
     global sticks, name, max_choice
+    if sticks <= 0:
+        return
     
     if sticks <= max_choice:
         computer_choice = random.randint(1, sticks)
